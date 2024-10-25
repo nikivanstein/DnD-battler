@@ -152,11 +152,11 @@ class CreatureAction(CreatureAdvBase):
         elif economy and self is self.arena.find('weakest allies')[0]:
             self.log.debug(self.name + " is dodging")
             self.dodge = 1
-        elif economy and self.alt_attack['name'] == 'net':
-            opponent = self.arena.find('fiersomest enemy alive', self)[0]
-            if opponent.condition != 'netted':
-                self.net(opponent)
-            else:
-                self.multiattack()
+        # elif economy and self.alt_attack['name'] == 'net':
+        #     opponent = self.arena.find('fiersomest enemy alive', self)[0]
+        #     if opponent.condition != 'netted':
+        #         self.net(opponent)
+        #     else:
+        #         self.multiattack()
         else:
             self.multiattack()

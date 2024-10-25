@@ -28,10 +28,10 @@ class CreatueInitAble(CreatureBase):
         assert isinstance(ability_die, AbilityDie), f'The die for {ability_name} is not a die, but {type(ability_die)}'
         assert ability_name in self.ability_names, f'{ability_name} is not in {self.ability_names}'
         if score is not None and bonus is not None:
-            if AbilityDie.score2bonus(score) != bonus:
-                self.log.warning(f'Mismatch with ability {ability_name}: bonus={bonus}, score={score}')
+            #if AbilityDie.score2bonus(score) != bonus:
+            #    self.log.warning(f'Mismatch with ability {ability_name}: bonus={bonus}, score={score}')
             ability_die.score = score
-            ability_die.bonus = bonus
+            ability_die.bonus = AbilityDie.score2bonus(score)
         elif score is not None:
             ability_die.score = score
             ability_die.bonus = AbilityDie.score2bonus(score)
