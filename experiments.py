@@ -1,17 +1,11 @@
-__author__ = 'Matteo'
-__doc__ = """
-The reason why I wrote the script was to run some tests.
-"""
-
-N = "\n"
-T = "\t"
-# N="<br/>"
-
 import pandas as pd
-import DnD_battler, csv
+import DnD_battler
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+import matplotlib.cm as cm
+import numpy as np
+import textalloc as ta
+import tqdm
 
 def cr_appraisal(party):
     """
@@ -28,13 +22,15 @@ def cr_appraisal(party):
     win_dict = {}
     #out.writeheader()
     # challenge each monster
-    for beastname in DnD_battler.Creature.beastiary:
+    for beastname in tqdm.tqdm(DnD_battler.Creature.beastiary, leave=False):
         beast = DnD_battler.Creature.load(beastname)
         beast.alignment = "opponent"
         party.append(beast)  # seems a bit wrong, but everything gets hard reset
         party.go_to_war(100)
         #print(beastname + ": " + str(party.tally['victories']['players']) + "%")
         win_dict[beastname] = party.tally['victories']['players']
+        if party.tally['victories']['players'] < 100 and party.tally['victories']['players'] > 0:
+             print(party.tally['victories']['players'])
         #out.writerow({'beast': beastname, 'victory': party.tally['victories']['players']})
         party.remove(beast)  # will perform a hard reset by default
 
@@ -47,19 +43,29 @@ def dice_variance(d):
 
 if __name__ == "__main__":
     beast_dict = {}
-    for beastname in DnD_battler.Creature.beastiary:
-        print("Processing ", beastname)
+    for beastname in tqdm.tqdm(DnD_battler.Creature.beastiary):
+        #print("Processing ", beastname)
         beast = DnD_battler.Creature.load(beastname)
         beast.alignment = "players"
         
         beast_dict[beastname] = cr_appraisal(DnD_battler.Encounter(beast))
         beast_dict[beastname]['CR'] = float(beast.cr)
         beast_dict[beastname]['HP'] = int(beast.hp)
+        beast_dict[beastname]['type'] = beast.type
     df = pd.DataFrame.from_dict(beast_dict).T
     df.to_csv('monster_victories.csv', index=False) 
     print(df)
     #commoner_brawl()
     #print(dice_variance(DnD_battler.Dice(0, num_faces=[100], role="damage")))
+
+    file_path_beastiary = 'DnD_battler/beastiary.csv'
+    df_beastiary = pd.read_csv(file_path_beastiary)
+
+    # Create a color palette based on unique monster types
+    unique_types = df['type'].unique()
+    colors = cm.rainbow(np.linspace(0, 1, len(unique_types)))
+    color_map = dict(zip(unique_types, colors))
+    df['color'] = df['type'].map(color_map)
 
     # Assume each row and column in df represents a different monster
     # Calculate the average number of wins across the columns for each monster
@@ -80,7 +86,7 @@ if __name__ == "__main__":
     df_by_hp = df.sort_values(by='HP')
 
     # 1. Heatmap of Wins Between Monsters
-    plt.figure(figsize=(12, 10))
+    plt.figure(figsize=(24, 24))
     sns.heatmap(heatmap_data, annot=False, cmap='YlGnBu', cbar=True)
     plt.title("Win Probability Heatmap Between Monsters")
     plt.xlabel("Opponent Monsters")
@@ -89,21 +95,38 @@ if __name__ == "__main__":
     plt.savefig("heatmap_monsters.png")
     plt.clf()
 
-    # 2. Scatter Plot of Average Wins vs. Challenge Rating
-    plt.figure(figsize=(10, 6))
-    plt.scatter(df_by_cr['CR'], df_by_cr['average_wins'])
+
+        
+    # 1. Scatter Plot of Average Wins vs. Challenge Rating with Labels and Colors
+    plt.figure(figsize=(18, 10))
+    x_cr = df_by_cr['CR']
+    y_cr = df_by_cr['average_wins']
+    colors_cr = df_by_cr['color']
+    text_list_cr = df_by_cr.index
+    plt.scatter(x_cr, y_cr, c=colors_cr)
+
+    ta.allocate(plt.gca(), x_cr, y_cr, text_list_cr, draw_all=True, x_scatter=x_cr, y_scatter=y_cr, textsize=10, max_distance=0.2, linecolor='k', textcolor=colors_cr, avoid_crossing_label_lines=True, linewidth=0.5)
+
     plt.title("Average Wins vs Challenge Rating")
     plt.xlabel("Challenge Rating")
     plt.ylabel("Average Wins")
     plt.tight_layout()
-    plt.savefig("average_wins_per_cr.png")
+    plt.savefig("average_wins_per_cr_annotated.png")
     plt.clf()
 
-    # 3. Scatter Plot of Average Wins vs HP
-    plt.figure(figsize=(10, 6))
-    plt.scatter(df_by_hp['HP'], df_by_hp['average_wins'])
+    # 2. Scatter Plot of Average Wins vs HP with Labels and Colors
+    plt.figure(figsize=(18, 10))
+    x_hp = df_by_hp['HP']
+    y_hp = df_by_hp['average_wins']
+    colors_hp = df_by_hp['color']
+    text_list_hp = df_by_hp.index
+    plt.scatter(x_hp, y_hp, c=colors_hp)
+
+    ta.allocate(plt.gca(), x_hp, y_hp, text_list_hp, draw_all=True, x_scatter=x_cr, y_scatter=y_cr, textsize=10, max_distance=0.2, linecolor='k', textcolor=colors_hp, avoid_crossing_label_lines=True, linewidth=0.5)
+
     plt.title("Average Wins vs HP")
     plt.xlabel("HP")
     plt.ylabel("Average Wins")
     plt.tight_layout()
-    plt.savefig("average_wins_per_HP.png")
+    plt.savefig("average_wins_per_HP_annotated.png")
+    plt.clf()

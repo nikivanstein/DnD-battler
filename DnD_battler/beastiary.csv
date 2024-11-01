@@ -125,7 +125,7 @@ Thunderbeast,,chaotic neutral,Medium magical beast (electricity),Medium,natural 
 Magmaduck,,chaotic neutral,Medium magical beast (fire),Medium,natural armor,16,0,16,112,112,112,0,10,15,18,16,18,12,14,10,"[[""Flame Claw"", 8, 0, 16], [""Fire Breath"", 0, 0, 35], [""Magma Burst"", 0, 0, 21]]",7,2900,0,,,,,,4,3,4,3,4,1,2,0
 Clawmauler,,unaligned,Large vermin,Large,natural armor,17,0,17,136,136,136,0,12,16,22,16,18,8,14,10,"[[""Mandible"", 10, 0, 21], [""Crushing Grip"", 0, 0, 32]]",8,3900,0,,,,,,5,3,6,3,4,-1,2,0
 Thunderhorn,,unaligned,Large beast,Large,natural armor,16,0,16,127,127,127,0,10,15,22,16,18,6,14,10,"[[""Gore"", 10, 0, 19], [""Stomp"", 10, 0, 16]]",7,2900,0,,,,,,4,3,6,3,4,-2,2,0
-Floundersnap,,unaligned,Small beast (aquatic),Small,,11,0,11,9,9,9,0,1,2,8,12,13,4,10,6,"[[""Flop"", 3, 0, 1]]",0.125,25,0,,,,,,2,1,-1,1,1,-3,0,-2
+Floundersnap,,unaligned,Small beast (aquatic),Small,,11,0,11,9,9,9,0,1,2,8,12,13,4,10,6,"[[""Flop"", 3, 1, 2]]",0.125,25,0,,,,,,2,1,-1,1,1,-3,0,-2
 Stormwyrm,,chaotic neutral,Huge beast (aquatic),Huge,natural armor,17,0,17,189,189,189,0,12,18,24,14,18,8,14,12,"[[""Bite"", 12, 0, 22], [""Tail"", 12, 0, 18]]",12,8400,0,,,,,,6,2,7,2,4,-1,2,1
 Morphling,,neutral,Medium shapeshifter,Medium,natural armor,14,0,14,66,66,66,0,8,12,10,18,12,12,14,14,"[[""Mimic Attack"", 6, 6, 6]]",6,2300,0,,,,,,0,3,4,0,4,1,2,2
 Evoolve,,neutral good,Small magical beast,Small,,13,0,13,22,22,22,0,2,4,10,15,14,10,12,14,"[[""Quick Bite"", 4, 0, 7]]",0.25,50,0,,,,,,2,2,0,2,2,0,1,2
