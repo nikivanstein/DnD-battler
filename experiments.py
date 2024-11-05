@@ -29,8 +29,8 @@ def cr_appraisal(party):
         party.go_to_war(100)
         #print(beastname + ": " + str(party.tally['victories']['players']) + "%")
         win_dict[beastname] = party.tally['victories']['players']
-        if party.tally['victories']['players'] < 100 and party.tally['victories']['players'] > 0:
-             print(party.tally['victories']['players'])
+        # if party.tally['victories']['players'] < 100 and party.tally['victories']['players'] > 0:
+        #      print(party.tally['victories']['players'])
         #out.writerow({'beast': beastname, 'victory': party.tally['victories']['players']})
         party.remove(beast)  # will perform a hard reset by default
 

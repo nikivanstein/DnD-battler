@@ -156,7 +156,7 @@ class EncounterAction(EncounterBase):
 
     def go_to_war(self, rounds=1000):
         for i in range(rounds):
-            self.battle(reset=False)
+            self.battle(reset=True)
         x = {y: self.tally['victories'][y] for y in self.sides}
         se = {}
         for i in list(x):
