@@ -86,8 +86,8 @@ if __name__ == "__main__":
     df_by_hp = df.sort_values(by='HP')
 
     # 1. Heatmap of Wins Between Monsters
-    plt.figure(figsize=(24, 24))
-    sns.heatmap(heatmap_data, annot=False, cmap='YlGnBu', cbar=True)
+    plt.figure(figsize=(40, 40))
+    sns.heatmap(heatmap_data, annot=False, cmap='YlGnBu', cbar=False)
     plt.title("Win Probability Heatmap Between Monsters")
     plt.xlabel("Opponent Monsters")
     plt.ylabel("Monsters")
